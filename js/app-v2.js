@@ -34,6 +34,13 @@ const options = {
 function init() {
   $('.start').on('click', startGame);
 }
+
+function startGame() {
+  interval1 = setInterval(chooseSquare, speed1);
+  interval2 = setInterval(countDown, 1000);
+  interval3 = setInterval(newLevels, speed1);
+}
+
 function countDown() {
   timer--;
   // console.log(timer);
@@ -42,14 +49,13 @@ function countDown() {
     $('.countdown').text('GAME OVER');
     clearInterval(interval1);
     clearInterval(interval2);
-    timer = 46; // TO RE-START THE TIMER
-    score = 0; // TO RE-START THE SCORE
+    timer = 46;
+    score = 0;
   }
-  // newLevels(); I CALL MY FUNCTION FROM HERE SO I CAN APPEND WHEN THE CLOCK IS TICKING and not from the bottom when the timer didnt start. I DONT NEED CAUSE IM NOT APPENDING NOW, JUST GIVING CLASS
 }
 
 function pickRandomSquare() {
-  $box = $('.box');//2. RESET MY LIS
+  $box = $('.box');
   return $box[Math.floor(Math.random()*$box.length)];
 }
 
@@ -67,8 +73,8 @@ function chooseRandomImage() {
 }
 
 function chooseSquare() {
-  const option  = chooseRandomImage();
   const $square = $(pickRandomSquare());
+  const option  = chooseRandomImage();
   var image = $(`<img src="images/${option.image}.png" class="img">`);
   $square.html(image);
 
@@ -83,21 +89,13 @@ function chooseSquare() {
     }
     // console.log(score);
   });
-  //CLEAR THE CLICK AND PICTURE after 1sec
+
+  //Clear click and picture
   setTimeout(function() {
     $square.off('click');
     $square.html('');
   }, speed1);
 }
-
-
-function startGame() {
-  $box = $('.box');// 1.RESET LIS
-  interval1 = setInterval(chooseSquare, speed1);
-  interval2 = setInterval(countDown, 1000);
-  interval3 = setInterval(newLevels, speed1);
-}
-// THE PICTURES DOES NOT APPEAR IN THE GENERATED BOXES
 
 function newLevels(){
   // var $newLis = $('li').length;
@@ -105,19 +103,19 @@ function newLevels(){
     var newBox1 = document.getElementById('4');
     newBox1.className = 'box';
     clearInterval(interval1);
-    speed1 = 650;
+    speed1 = 750;
     interval1 = setInterval(chooseSquare, speed1);
   }
-  if(score >=200){
+  if(score >=150){
     var newBox2 = document.getElementById('9');
     newBox2.className = 'box';
     var newBox3 = document.getElementById('14');
     newBox3.className = 'box';
     clearInterval(interval1);
-    speed1 = 550;
+    speed1 = 650;
     interval1 = setInterval(chooseSquare, speed1);
   }
-  if(score >=300){
+  if(score >=200){
     var newBox4 = document.getElementById('5');
     newBox4.className = 'box';
     var newBox5 = document.getElementById('10');
@@ -131,7 +129,7 @@ function newLevels(){
 }
 
 
-
+//ANIMATIONS
 $(document).ready(function(){
   $('.start').hover(function() {
     $('.start').addClass('transition');
@@ -139,4 +137,12 @@ $(document).ready(function(){
   }, function() {
     $('.start').removeClass('transition');
   });
+});
+
+$(function() {
+  $('body').hide().fadeIn(2000);
+});
+
+$(function() {
+  $('ul').hide().fadeIn(3000);
 });
